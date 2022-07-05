@@ -29,7 +29,9 @@ namespace SumeraTravelCorporation.Controllers
           {
               return NotFound();
           }
-            return await _context.Airports.ToListAsync();
+            return await _context.Airports
+                .Include("CityRef")
+                .ToListAsync();
         }
 
         // GET: api/Airports/5
@@ -40,7 +42,9 @@ namespace SumeraTravelCorporation.Controllers
           {
               return NotFound();
           }
-            var airport = await _context.Airports.FindAsync(id);
+            var airport = await _context.Airports
+                         .Include("CityRef")
+                         .SingleOrDefaultAsync(x => x.Id == id);
 
             if (airport == null)
             {
