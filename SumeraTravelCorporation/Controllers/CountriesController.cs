@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SumeraTravelCorporation.Data;
+using SumeraTravelCorporation.Data.Dtos;
 using SumeraTravelCorporation.Data.Models;
+using SumeraTravelCorporation.Services;
 
 namespace SumeraTravelCorporation.Controllers
 {
@@ -14,111 +16,125 @@ namespace SumeraTravelCorporation.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
+        private readonly ICountryCrudService _countryCrudService;
+        private readonly ILogger<CountriesController> _logger;
 
-        public CountriesController(ApplicationDbContext context)
+
+        public CountriesController(
+            ICountryCrudService countryCrudService,
+            ILogger<CountriesController> logger)
         {
-            _context = context;
+            _countryCrudService = countryCrudService;
+            _logger = logger;
+            //_context = context;
         }
 
         // GET: api/Countries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
-          if (_context.Countries == null)
-          {
-              return NotFound();
-          }
-            return await _context.Countries.ToListAsync();
+          
+            try
+            {
+                var countries = await _countryCrudService.GetAllAsync();
+                return Ok(countries);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "Error in GetAll");
+                return Problem("Error in GetAll");
+            }
         }
 
         // GET: api/Countries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Country>> GetCountry(int id)
+        public async Task<ActionResult<CountryDto>> GetCountry(int id)
         {
-          if (_context.Countries == null)
-          {
-              return NotFound();
-          }
-            var country = await _context.Countries.FindAsync(id);
-
-            if (country == null)
+          
+          if(id == 0)
             {
                 return NotFound();
             }
-
-            return country;
+          var country = await _countryCrudService.GetByIdAsync((int)id);
+            if(country == null)
+            {
+                return NotFound();
+            }
+            return Ok(country);
+          
         }
 
         // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCountry(int id, Country country)
+        public async Task<IActionResult> PutCountry(int id, CountryDto country)
         {
-            if (id != country.Id)
+        
+            if (id == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(country).State = EntityState.Modified;
-
-            try
+            if(id != country.Id)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+            if (ModelState.IsValid)
             {
-                if (!CountryExists(id))
+                try
                 {
-                    return NotFound();
+                    await _countryCrudService.UpdateAsync(country);
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
-                }
+                    if(!await _countryCrudService.Exists(country.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }                
             }
-
-            return NoContent();
+            return Ok(country);
         }
 
         // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Country>> PostCountry(Country country)
+        public async Task<ActionResult<CountryDto>> PostCountry(CountryDto country)
         {
-          if (_context.Countries == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Countries'  is null.");
-          }
-            _context.Countries.Add(country);
-            await _context.SaveChangesAsync();
+            
+            if (ModelState.IsValid)
+            {
+                await _countryCrudService.CreateAsync(country);
+            }
+            return Ok(country);
 
-            return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
 
         // DELETE: api/Countries/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountry(int id)
-        {
-            if (_context.Countries == null)
+        {          
+            if(id == null)
             {
                 return NotFound();
             }
-            var country = await _context.Countries.FindAsync(id);
-            if (country == null)
+            var country = await _countryCrudService.GetByIdAsync((int)id);
+            if(country == null)
             {
                 return NotFound();
             }
-
-            _context.Countries.Remove(country);
-            await _context.SaveChangesAsync();
+            await _countryCrudService.DeleteAsync(id);
 
             return NoContent();
         }
 
-        private bool CountryExists(int id)
-        {
-            return (_context.Countries?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        //private bool CountryExists(int id)
+        //{
+        //    return (_context.Countries?.Any(e => e.Id == id)).GetValueOrDefault();
+        //}
     }
 }

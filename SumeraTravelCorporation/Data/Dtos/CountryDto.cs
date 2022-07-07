@@ -1,8 +1,10 @@
-﻿namespace SumeraTravelCorporation.Data.Dtos
+﻿using SumeraTravelCorporation.RepositoryPattern.RepositoryBase;
+
+namespace SumeraTravelCorporation.Data.Dtos
 {
-    public class CountryDto
+    public class CountryDto : ViewModelBase
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
      
         public string? Name { get; set; }
       

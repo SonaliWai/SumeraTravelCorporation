@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using SumeraTravelCorporation;
 using SumeraTravelCorporation.Data;
+using SumeraTravelCorporation.RepositoryPattern;
+using SumeraTravelCorporation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,12 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+builder.Services.AddScoped<ICountryCrudService, CountryCrudService>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 
 var app = builder.Build();
 
