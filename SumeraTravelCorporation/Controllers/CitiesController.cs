@@ -23,10 +23,10 @@ namespace SumeraTravelCorporation.Controllers
 
         public CitiesController(
             ICityCrudService cityCrudService,
-            ILogger<CitiesController> _logger)
+            ILogger<CitiesController> logger)
         {
             _cityCrudService = cityCrudService;
-            _logger = _logger;
+            _logger = logger;
             //_context = context;
         }
 

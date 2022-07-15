@@ -9,12 +9,15 @@ namespace SumeraTravelCorporation
         public AutoMapperProfile()
         {
             CreateMap<Country, CountryDto>().ReverseMap();
-            //CreateMap<Department, DepartmentDropDownViewModel>();
+            CreateMap<City, CityDto>().ReverseMap();
+            CreateMap<Location, LocationDto>().ReverseMap();
 
-            //CreateMap<Employee, EmployeeViewModel>()
-                //.ForMember(e => e.Name, opt => opt.MapFrom(e => e.CountryRef.Name))
-                //.ReverseMap()
-                //.ForPath(e => e.CountryRef.Name, opt => opt.Ignore());
+            // CreateMap<Country, CountryDto>();
+
+            //CreateMap<Country, CountryDto>()
+            //    .ForMember(c => c.Name, opt => opt.MapFrom(c => c.Name))
+            //    .ReverseMap()
+            //    .ForPath(c => c.Name, opt => opt.Ignore());
         }
     }
 }

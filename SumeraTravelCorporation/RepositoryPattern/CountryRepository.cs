@@ -31,7 +31,7 @@ namespace SumeraTravelCorporation.RepositoryPattern
         public async Task<T?> GetByIdAsync<T>(int id)
         {
             //var department = await _context.Departments
-            //    .FirstOrDefaultAsync(m => m.Id == id);
+            // .FirstOrDefaultAsync(m => m.Id == id);
 
             var country = await _mapper
                 .ProjectTo<T>(_context.Countries

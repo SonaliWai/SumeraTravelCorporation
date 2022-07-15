@@ -34,13 +34,13 @@ namespace SumeraTravelCorporation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
-          
+
             try
             {
                 var countries = await _countryCrudService.GetAllAsync();
                 return Ok(countries);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, "Error in GetAll");
                 return Problem("Error in GetAll");
@@ -51,18 +51,17 @@ namespace SumeraTravelCorporation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CountryDto>> GetCountry(int id)
         {
-          
-          if(id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
-          var country = await _countryCrudService.GetByIdAsync((int)id);
-            if(country == null)
+
+            var country = await _countryCrudService.GetByIdAsync((int)id);
+            if (country == null)
             {
                 return NotFound();
             }
             return Ok(country);
-          
         }
 
         // PUT: api/Countries/5
@@ -70,12 +69,12 @@ namespace SumeraTravelCorporation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCountry(int id, CountryDto country)
         {
-        
+
             if (id == null)
             {
                 return NotFound();
             }
-            if(id != country.Id)
+            if (id != country.Id)
             {
                 return NotFound();
             }
@@ -87,7 +86,7 @@ namespace SumeraTravelCorporation.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if(!await _countryCrudService.Exists(country.Id))
+                    if (!await _countryCrudService.Exists(country.Id))
                     {
                         return NotFound();
                     }
@@ -95,7 +94,7 @@ namespace SumeraTravelCorporation.Controllers
                     {
                         throw;
                     }
-                }                
+                }
             }
             return Ok(country);
         }
@@ -105,7 +104,7 @@ namespace SumeraTravelCorporation.Controllers
         [HttpPost]
         public async Task<ActionResult<CountryDto>> PostCountry(CountryDto country)
         {
-            
+
             if (ModelState.IsValid)
             {
                 await _countryCrudService.CreateAsync(country);
@@ -117,13 +116,13 @@ namespace SumeraTravelCorporation.Controllers
         // DELETE: api/Countries/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountry(int id)
-        {          
-            if(id == null)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
             var country = await _countryCrudService.GetByIdAsync((int)id);
-            if(country == null)
+            if (country == null)
             {
                 return NotFound();
             }

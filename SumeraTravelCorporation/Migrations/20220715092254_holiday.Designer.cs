@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SumeraTravelCorporation.Data;
 
@@ -11,9 +12,10 @@ using SumeraTravelCorporation.Data;
 namespace SumeraTravelCorporation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220715092254_holiday")]
+    partial class holiday
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -451,86 +453,6 @@ namespace SumeraTravelCorporation.Migrations
                     b.ToTable("Flight", "Master");
                 });
 
-            modelBuilder.Entity("SumeraTravelCorporation.Data.Models.HolidayBooking", b =>
-                {
-                    b.Property<int>("HolidayBookingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HolidayBookingId"), 1L, 1);
-
-                    b.Property<DateTime>("BookingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CustomerRefId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HolidayPackageRefId")
-                        .HasColumnType("int");
-
-                    b.HasKey("HolidayBookingId");
-
-                    b.HasIndex("CustomerRefId");
-
-                    b.HasIndex("HolidayPackageRefId");
-
-                    b.ToTable("HolidayBookings");
-                });
-
-            modelBuilder.Entity("SumeraTravelCorporation.Data.Models.HolidayPackage", b =>
-                {
-                    b.Property<int>("HolidayPackageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HolidayPackageId"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FromLocationRefId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HolidayPackagePrice")
-                        .IsUnicode(false)
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HotelRefId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfGuest")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PackageTitle")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int?>("ToLocationRefId")
-                        .HasColumnType("int");
-
-                    b.HasKey("HolidayPackageId");
-
-                    b.HasIndex("FromLocationRefId");
-
-                    b.HasIndex("HotelRefId");
-
-                    b.HasIndex("ToLocationRefId");
-
-                    b.ToTable("HolidayPackage", "Master");
-                });
-
             modelBuilder.Entity("SumeraTravelCorporation.Data.Models.Hotel", b =>
                 {
                     b.Property<int>("HotelId")
@@ -577,24 +499,6 @@ namespace SumeraTravelCorporation.Migrations
                     b.HasIndex("HotelRefId");
 
                     b.ToTable("HotelAmenitiesLink", "Master");
-                });
-
-            modelBuilder.Entity("SumeraTravelCorporation.Data.Models.Location", b =>
-                {
-                    b.Property<int>("LocationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"), 1L, 1);
-
-                    b.Property<string>("LocationName")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("LocationId");
-
-                    b.ToTable("Location", "Master");
                 });
 
             modelBuilder.Entity("SumeraTravelCorporation.Data.FlightBooking", b =>
@@ -721,42 +625,6 @@ namespace SumeraTravelCorporation.Migrations
                     b.Navigation("AirportRefid");
 
                     b.Navigation("CityRef");
-                });
-
-            modelBuilder.Entity("SumeraTravelCorporation.Data.Models.HolidayBooking", b =>
-                {
-                    b.HasOne("SumeraTravelCorporation.Data.Models.Customer", "CustomerRef")
-                        .WithMany()
-                        .HasForeignKey("CustomerRefId");
-
-                    b.HasOne("SumeraTravelCorporation.Data.Models.HolidayPackage", "HolidayPackageRef")
-                        .WithMany()
-                        .HasForeignKey("HolidayPackageRefId");
-
-                    b.Navigation("CustomerRef");
-
-                    b.Navigation("HolidayPackageRef");
-                });
-
-            modelBuilder.Entity("SumeraTravelCorporation.Data.Models.HolidayPackage", b =>
-                {
-                    b.HasOne("SumeraTravelCorporation.Data.Models.Location", "FromLocationRef")
-                        .WithMany()
-                        .HasForeignKey("FromLocationRefId");
-
-                    b.HasOne("SumeraTravelCorporation.Data.Models.Hotel", "HotelRef")
-                        .WithMany()
-                        .HasForeignKey("HotelRefId");
-
-                    b.HasOne("SumeraTravelCorporation.Data.Models.Location", "ToLocationRef")
-                        .WithMany()
-                        .HasForeignKey("ToLocationRefId");
-
-                    b.Navigation("FromLocationRef");
-
-                    b.Navigation("HotelRef");
-
-                    b.Navigation("ToLocationRef");
                 });
 
             modelBuilder.Entity("SumeraTravelCorporation.Data.Models.Hotel", b =>

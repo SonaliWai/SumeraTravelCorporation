@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SumeraTravelCorporation.Data;
+using SumeraTravelCorporation.Data.Dtos;
 using SumeraTravelCorporation.Data.Models;
 
 namespace SumeraTravelCorporation.Controllers
@@ -29,7 +30,11 @@ namespace SumeraTravelCorporation.Controllers
           {
               return NotFound();
           }
-            return await _context.HotelAmenitiesLinks.ToListAsync();
+
+            return await _context.HotelAmenitiesLinks
+                .Include("HotelRef")
+                .Include("AmenitiesRef")
+                .ToListAsync();
         }
 
         // GET: api/HotelAmenitiesLinks/5
@@ -40,7 +45,11 @@ namespace SumeraTravelCorporation.Controllers
           {
               return NotFound();
           }
-            var hotelAmenitiesLink = await _context.HotelAmenitiesLinks.FindAsync(id);
+
+            var hotelAmenitiesLink = await _context.HotelAmenitiesLinks
+                .Include("HotelRef")
+                .Include("AmenitiesRef")
+                .SingleOrDefaultAsync(x => x.Id == id);
 
             if (hotelAmenitiesLink == null)
             {
@@ -86,11 +95,13 @@ namespace SumeraTravelCorporation.Controllers
         [HttpPost]
         public async Task<ActionResult<HotelAmenitiesLink>> PostHotelAmenitiesLink(HotelAmenitiesLink hotelAmenitiesLink)
         {
+
           if (_context.HotelAmenitiesLinks == null)
           {
               return Problem("Entity set 'ApplicationDbContext.HotelAmenitiesLinks'  is null.");
           }
-            _context.HotelAmenitiesLinks.Add(hotelAmenitiesLink);
+
+            await _context.HotelAmenitiesLinks.AddAsync(hotelAmenitiesLink);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetHotelAmenitiesLink", new { id = hotelAmenitiesLink.Id }, hotelAmenitiesLink);

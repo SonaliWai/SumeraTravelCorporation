@@ -19,22 +19,22 @@ namespace SumeraTravelCorporation.Services
         }
         public async Task<List<CountryDto>> GetAllAsync()
         {
-            var countries = await _countryRepository.GetAllAsync<CountryDto>();
+            var countryDtos = await _countryRepository.GetAllAsync<CountryDto>();
 
-            var countryDtos = countries
-                .Select(d => _mapper.Map<CountryDto>(d))
-                .ToList();
+            //var countryDtos = countries
+            //    .Select(d => _mapper.Map<CountryDto>(d))
+            //    .ToList();
 
             return countryDtos;
         }
 
         public async Task<CountryDto?> GetByIdAsync(int id)
         {
-            var countries = await _countryRepository.GetByIdAsync<CountryDto>(id);
+            var countryDto = await _countryRepository.GetByIdAsync<CountryDto>(id);
 
-            var countryDtos = _mapper.Map<CountryDto>(countries);
+            //var countryDtos = _mapper.Map<CountryDto>(countryDtos);
 
-            return countryDtos;
+            return countryDto;
         }
 
         public async Task CreateAsync(CountryDto country)

@@ -19,6 +19,9 @@ namespace SumeraTravelCorporation.Data
         public DbSet<FlightSchedule> FlightSchedules{ get; set; }
         public DbSet<HotelBooking> HotelBookings{ get; set; }
         public DbSet<HotelCustomerDetail> HotelCustomerDetails{ get; set; }
+        public DbSet<Location> Locations{ get; set; }
+        public DbSet<HolidayPackage> HolidayPackages{ get; set; }
+        public DbSet<HolidayBooking> HolidayBookings{ get; set; }
 
 
 
