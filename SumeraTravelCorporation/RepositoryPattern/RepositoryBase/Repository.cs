@@ -6,7 +6,7 @@ namespace SumeraTravelCorporation.RepositoryPattern.RepositoryBase
 {
     public class ViewDtoBase
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
     }
 
     public class DataModelBase
@@ -45,8 +45,17 @@ namespace SumeraTravelCorporation.RepositoryPattern.RepositoryBase
 
         public async Task CreateAsync(TDataModel entity)
         {
-            await DbSet.AddAsync(entity);
-            await _db.SaveChangesAsync();
+            try
+            {
+                await DbSet.AddAsync(entity);
+
+                await _db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+                { 
+
+            }
+           
         }
 
         public async Task UpdateAsync(TDataModel entity)

@@ -10,16 +10,16 @@ namespace SumeraTravelCorporation.Services
         private readonly IHolidayPackageRepository _holidayPackageRepository;
         private readonly IMapper _mapper;
 
-        public HolidayPackageCrudService(IHolidayPackageRepository flightRepository, IMapper mapper)
+        public HolidayPackageCrudService(IHolidayPackageRepository holidayPackageRepository, IMapper mapper)
         {
-            _holidayPackageRepository = flightRepository;
+            _holidayPackageRepository = holidayPackageRepository;
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(HolidayPackageDto flightDto)
+        public async Task CreateAsync(HolidayPackageDto holidayPackageDto)
         {
-            var flight = _mapper.Map<HolidayPackage>(flightDto);
-            await _holidayPackageRepository.CreateAsync(flight);
+            var holidayPackage = _mapper.Map<HolidayPackage>(holidayPackageDto);
+            await _holidayPackageRepository.CreateAsync(holidayPackage);
         }
 
         public async Task DeleteAsync(int id)

@@ -12,8 +12,8 @@ using SumeraTravelCorporation.Data;
 namespace SumeraTravelCorporation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220715164215_new")]
-    partial class @new
+    [Migration("20220716133701_holidayb")]
+    partial class holidayb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -455,11 +455,11 @@ namespace SumeraTravelCorporation.Migrations
 
             modelBuilder.Entity("SumeraTravelCorporation.Data.Models.HolidayBooking", b =>
                 {
-                    b.Property<int>("HolidayBookingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HolidayBookingId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
@@ -470,7 +470,7 @@ namespace SumeraTravelCorporation.Migrations
                     b.Property<int?>("HolidayPackageRefId")
                         .HasColumnType("int");
 
-                    b.HasKey("HolidayBookingId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CustomerRefId");
 
@@ -481,11 +481,11 @@ namespace SumeraTravelCorporation.Migrations
 
             modelBuilder.Entity("SumeraTravelCorporation.Data.Models.HolidayPackage", b =>
                 {
-                    b.Property<int>("HolidayPackageId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HolidayPackageId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -502,14 +502,14 @@ namespace SumeraTravelCorporation.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("HolidayPackagePrice")
-                        .IsUnicode(false)
                         .HasColumnType("int");
 
                     b.Property<int?>("HotelRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<int>("NumberOfGuest")
                         .HasColumnType("int");
@@ -522,7 +522,7 @@ namespace SumeraTravelCorporation.Migrations
                     b.Property<int?>("ToLocationRefId")
                         .HasColumnType("int");
 
-                    b.HasKey("HolidayPackageId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FromLocationRefId");
 

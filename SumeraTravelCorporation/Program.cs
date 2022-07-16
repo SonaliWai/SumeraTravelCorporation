@@ -29,6 +29,9 @@ builder.Services.AddScoped<ILocationCrudService, LocationCrudService>();
 builder.Services.AddScoped<IHolidayPackageRepository, HolidayPackageRepository>();
 builder.Services.AddScoped<IHolidayPackageCrudService, HolidayPackageCrudService>();
 
+builder.Services.AddScoped<IHolidayBookingRepository, HolidayBookingRepository>();
+builder.Services.AddScoped<IHolidayBookingCrudService, HolidayBookingCrudService>();
+
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 

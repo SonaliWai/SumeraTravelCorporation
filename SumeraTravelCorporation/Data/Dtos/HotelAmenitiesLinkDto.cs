@@ -2,7 +2,7 @@
 
 namespace SumeraTravelCorporation.Data.Dtos
 {
-    public class HotelAmenitiesLinkDto
+    public class HotelAmenitiesLinkDto 
     {
         public int Id { get; set; }
         public int? HotelRefId { get; set; }

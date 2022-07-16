@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SumeraTravelCorporation.Migrations
 {
-    public partial class @new : Migration
+    public partial class holidayb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -247,12 +247,12 @@ namespace SumeraTravelCorporation.Migrations
                 schema: "Master",
                 columns: table => new
                 {
-                    HolidayPackageId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FromLocationRefId = table.Column<int>(type: "int", nullable: true),
                     ToLocationRefId = table.Column<int>(type: "int", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HolidayPackagePrice = table.Column<int>(type: "int", unicode: false, nullable: false),
+                    Image = table.Column<string>(type: "varchar(max)", unicode: false, nullable: true),
+                    HolidayPackagePrice = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     HotelRefId = table.Column<int>(type: "int", nullable: true),
                     NumberOfGuest = table.Column<int>(type: "int", nullable: false),
@@ -262,7 +262,7 @@ namespace SumeraTravelCorporation.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HolidayPackage", x => x.HolidayPackageId);
+                    table.PrimaryKey("PK_HolidayPackage", x => x.Id);
                     table.ForeignKey(
                         name: "FK_HolidayPackage_Hotel_HotelRefId",
                         column: x => x.HotelRefId,
@@ -359,7 +359,7 @@ namespace SumeraTravelCorporation.Migrations
                 name: "HolidayBookings",
                 columns: table => new
                 {
-                    HolidayBookingId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HolidayPackageRefId = table.Column<int>(type: "int", nullable: true),
                     CustomerRefId = table.Column<int>(type: "int", nullable: true),
@@ -367,7 +367,7 @@ namespace SumeraTravelCorporation.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HolidayBookings", x => x.HolidayBookingId);
+                    table.PrimaryKey("PK_HolidayBookings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_HolidayBookings_Customer_CustomerRefId",
                         column: x => x.CustomerRefId,
@@ -379,7 +379,7 @@ namespace SumeraTravelCorporation.Migrations
                         column: x => x.HolidayPackageRefId,
                         principalSchema: "Master",
                         principalTable: "HolidayPackage",
-                        principalColumn: "HolidayPackageId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

@@ -8,7 +8,7 @@ namespace SumeraTravelCorporation.Data.Models
     [Table("HolidayPackage", Schema = "Master")]
     public class HolidayPackage : DataModelBase
     {
-        public int HolidayPackageId { get; set; }
+        //public int HolidayPackageId { get; set; }
         public int? FromLocationRefId { get; set; }
         [ForeignKey(nameof(FromLocationRefId))]
         public Location? FromLocationRef { get; set; } 
@@ -16,9 +16,9 @@ namespace SumeraTravelCorporation.Data.Models
         [ForeignKey(nameof(ToLocationRefId))]
         public Location? ToLocationRef { get; set; }
 
-        public string? Image { get; set; }
         [Unicode(false)]
-
+        public string? Image { get; set; }
+       
         public int HolidayPackagePrice { get; set; }
         public int Duration { get; set; }
         public int? HotelRefId { get; set; }

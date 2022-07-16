@@ -9,27 +9,27 @@ namespace SumeraTravelCorporation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HolidayPackageController : ControllerBase
+    public class HolidayBookingController : ControllerBase
     {
-        private IHolidayPackageCrudService _holidayPackageService;
-        private readonly ILogger<HolidayPackageController> _logger;
+        private IHolidayBookingCrudService _holidayBookingService;
+        private readonly ILogger<HolidayBookingController> _logger;
 
 
-        public HolidayPackageController(IHolidayPackageCrudService holidayPackageService, ILogger<HolidayPackageController> logger)
+        public HolidayBookingController(IHolidayBookingCrudService holidayBookingService, ILogger<HolidayBookingController> logger)
         {
-            _holidayPackageService = holidayPackageService;
+            _holidayBookingService = holidayBookingService;
             _logger = logger;
 
         }
 
         // GET: api/Flights
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HolidayPackageDto>>> GetFlights()
+        public async Task<ActionResult<IEnumerable<HolidayBookingDto>>> GetFlights()
         {
             try
             {
-                var holidayPackages = await _holidayPackageService.GetAllAsync();
-                return holidayPackages;
+                var holidayBookings = await _holidayBookingService.GetAllAsync();
+                return holidayBookings;
 
             }
             catch (Exception ex)
@@ -41,27 +41,27 @@ namespace SumeraTravelCorporation.Controllers
 
         // GET: api/Flights/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HolidayPackageDto>> GetHolidayPackage(int? id)
+        public async Task<ActionResult<HolidayBookingDto>> GetHolidayBooking(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var holidayPackage = await _holidayPackageService.GetByIdAsync((int)id);
-            if (holidayPackage == null)
+            var holidayBooking = await _holidayBookingService.GetByIdAsync((int)id);
+            if (holidayBooking == null)
             {
 
                 return NotFound();
             }
 
 
-            return holidayPackage;
+            return holidayBooking;
         }
 
         // PUT: api/Flights/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHolidayPackage(int id, HolidayPackageDto holidayPackage)
+        public async Task<IActionResult> PutHolidayBooking(int id, HolidayBookingDto holidayBooking)
         {
             if (id != id)
             {
@@ -71,11 +71,11 @@ namespace SumeraTravelCorporation.Controllers
 
             try
             {
-                await _holidayPackageService.UpdateAsync(holidayPackage);
+                await _holidayBookingService.UpdateAsync(holidayBooking);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _holidayPackageService.Exists(id))
+                if (!await _holidayBookingService.Exists(id))
                 {
                     return NotFound();
                 }
@@ -91,14 +91,14 @@ namespace SumeraTravelCorporation.Controllers
         // POST: api/Flights
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HolidayPackage>> PostFlight(HolidayPackageDto holidayPackage)
+        public async Task<ActionResult<HolidayBooking>> PostBooking(HolidayBookingDto holidayBooking)
         {
-            if (holidayPackage == null)
+            if (holidayBooking == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.HolidayPackage'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.HolidayBooking'  is null.");
             }
 
-            await _holidayPackageService.CreateAsync(holidayPackage);
+            await _holidayBookingService.CreateAsync(holidayBooking);
 
             //return CreatedAtAction("GetCity", new { id = flight.Id }, flight);
             return Ok("Inserted");
@@ -106,20 +106,20 @@ namespace SumeraTravelCorporation.Controllers
 
         // DELETE: api/Flights/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHolidayPackage(int id)
+        public async Task<IActionResult> DeleteHolidayBooking(int id)
         {
 
             if (id == null)
             {
                 return NotFound();
             }
-            var city = await _holidayPackageService.GetByIdAsync((int)id);
+            var city = await _holidayBookingService.GetByIdAsync((int)id);
             if (city == null)
             {
                 return NotFound();
             }
 
-            await _holidayPackageService.DeleteAsync((int)id);
+            await _holidayBookingService.DeleteAsync((int)id);
 
 
             return NoContent();

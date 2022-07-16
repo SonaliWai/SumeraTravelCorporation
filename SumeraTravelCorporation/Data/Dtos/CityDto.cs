@@ -10,6 +10,8 @@ namespace SumeraTravelCorporation.Data.Dtos
         public string? Name { get; set; }
         public int? CountryRefId { get; set; }
 
+        public string? CountryRefName { get; set; }
+
 
     }
 }

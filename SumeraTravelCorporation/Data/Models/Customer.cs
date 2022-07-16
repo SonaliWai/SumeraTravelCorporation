@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SumeraTravelCorporation.RepositoryPattern.RepositoryBase;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SumeraTravelCorporation.Data.Models
 {
     [Table("Customer", Schema = "Master")]
 
-    public class Customer
+    public class Customer: DataModelBase
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         [Unicode(false)]
         public string? FirstName { get; set; }

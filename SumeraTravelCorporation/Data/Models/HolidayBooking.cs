@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SumeraTravelCorporation.RepositoryPattern.RepositoryBase;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SumeraTravelCorporation.Data.Models
 {
-    public class HolidayBooking
+    public class HolidayBooking: DataModelBase
     {
-        public int HolidayBookingId { get; set; }
+        //public int HolidayBookingId { get; set; }
         public int? HolidayPackageRefId { get; set; }
         [ForeignKey(nameof(HolidayPackageRefId))]
         public HolidayPackage? HolidayPackageRef { get; set; } 

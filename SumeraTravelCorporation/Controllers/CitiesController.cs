@@ -108,7 +108,7 @@ namespace SumeraTravelCorporation.Controllers
             await _cityService.CreateAsync(city);
 
 
-            return CreatedAtAction("GetCity", new { id = city.Id }, city);
+            return Ok("Inserted");
         }
 
         // DELETE: api/Cities/5

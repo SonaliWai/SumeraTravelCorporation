@@ -21,11 +21,31 @@ namespace SumeraTravelCorporation.Services
 
         public async Task CreateAsync(CityDto cityDto)
         {
-            var city = _mapper.Map<City>(cityDto);
-            await _cityRepository.CreateAsync(city);
+            try
+            {
+
+
+                //var city = _mapper.Map<City>(cityDto);
+
+
+
+                var city = new City
+                {
+                    CountryRefId = cityDto.CountryRefId,
+                    Name = cityDto.Name,
+
+                };
+                await _cityRepository.CreateAsync(city);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+            }
 
         }
 
+    
         public async Task DeleteAsync(int id)
         {
             await _cityRepository.DeleteAsync(id);

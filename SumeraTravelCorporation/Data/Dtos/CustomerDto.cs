@@ -1,10 +1,11 @@
 ﻿using SumeraTravelCorporation.Data.Models;
+using SumeraTravelCorporation.RepositoryPattern.RepositoryBase;
 
 namespace SumeraTravelCorporation.Data.Dtos
 {
-    public class CustomerDto
+    public class CustomerDto : ViewDtoBase
     {
-        public int Id { get; set; }
+       // public int Id { get; set; }
      
         public string? FirstName { get; set; }
        

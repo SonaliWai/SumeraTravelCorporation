@@ -17,7 +17,7 @@ namespace SumeraTravelCorporation.Data.Models
         public int? CountryRefId { get; set; }
 
         [ForeignKey(nameof(CountryRefId))]
-        public Country? CountryRef { get; set; } = null!;
+        public Country CountryRef { get; set; } = null!;
 
     }
 }
