@@ -1,14 +1,14 @@
 ﻿namespace SumeraTravelCorporation.RepositoryPattern.RepositoryBase
 {
-    public interface IRepository<DtoDataModel>
+    public interface IRepository<TDataModel>
     {
-        Task<List<DtoViewModel>> GetAllAsync<DtoViewModel>();
+        Task<List<TDtoModel>> GetAllAsync<TDtoModel>();
 
-        Task<DtoViewModel?> GetByIdAsync<DtoViewModel>(int id) where DtoViewModel : ViewModelBase;
+        Task<TDtoModel?> GetByIdAsync<TDtoModel>(int id) where TDtoModel : ViewDtoBase;
 
-        Task CreateAsync(DtoDataModel entity);
+        Task CreateAsync(TDataModel entity);
 
-        Task UpdateAsync(DtoDataModel entity);
+        Task UpdateAsync(TDataModel entity);
 
         Task DeleteAsync(int id);
 

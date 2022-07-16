@@ -12,14 +12,14 @@ using SumeraTravelCorporation.Data;
 namespace SumeraTravelCorporation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220715092630_booking")]
-    partial class booking
+    [Migration("20220715164215_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);

@@ -1,6 +1,8 @@
-﻿namespace SumeraTravelCorporation.Data.Dtos
+﻿using SumeraTravelCorporation.RepositoryPattern.RepositoryBase;
+
+namespace SumeraTravelCorporation.Data.Dtos
 {
-    public class HolidayPackageDto
+    public class HolidayPackageDto : ViewDtoBase
     {
         public int HolidayPackageId { get; set; }
         public int? FromLocationRefId { get; set; }

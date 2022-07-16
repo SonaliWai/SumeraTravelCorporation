@@ -2,9 +2,9 @@
 
 namespace SumeraTravelCorporation.Data.Dtos
 {
-    public class CountryDto : ViewModelBase
+    public class CountryDto 
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
      
         public string? Name { get; set; }
       

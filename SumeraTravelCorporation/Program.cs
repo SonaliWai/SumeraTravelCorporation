@@ -20,11 +20,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<ICountryCrudService, CountryCrudService>();
 
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityCrudService, CityCrudService>();
+
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationCrudService, LocationCrudService>();
 
-builder.Services.AddScoped<ICityRepository, CityRepository>();
-builder.Services.AddScoped<ICityCrudService, CityCrudService>();
+builder.Services.AddScoped<IHolidayPackageRepository, HolidayPackageRepository>();
+builder.Services.AddScoped<IHolidayPackageCrudService, HolidayPackageCrudService>();
+
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 

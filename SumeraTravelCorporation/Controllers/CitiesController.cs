@@ -17,73 +17,53 @@ namespace SumeraTravelCorporation.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        private readonly ICityCrudService _cityCrudService;
-        readonly ILogger<CitiesController> _logger;
-        //private readonly ApplicationDbContext _context;
+        private ICityCrudService _cityService;
+        private readonly ILogger<CitiesController> _logger;
 
-        public CitiesController(
-            ICityCrudService cityCrudService,
-            ILogger<CitiesController> logger)
+        public CitiesController(ICityCrudService cityService, ILogger<CitiesController> logger)
         {
-            _cityCrudService = cityCrudService;
+            _cityService = cityService;
+
             _logger = logger;
-            //_context = context;
         }
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CityDto>>> GetCities()
+        public async Task<ActionResult<IEnumerable<CityDto>>> GetCitys()
         {
-            //if (_context.Cities == null)
-            //{
-            //    return NotFound();
-            //}
-            //  return await _context.Cities
-            //      .Include("CountryRef")
-            //      .ToListAsync();
-
             try
             {
-                var cities = await _cityCrudService.GetAllAsync();
-                return Ok(cities);
+                var cities = await _cityService.GetAllAsync();
+                return cities;
+
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError(e, "Error in GetAll");
-                return Problem("Error in GetAll");
+                _logger.LogError(ex, "Error in get all of City");
+                return NotFound();
             }
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CityDto>> GetCity(int id)
+        public async Task<ActionResult<CityDto>> GetCity(int? id)
         {
-            //if (_context.Cities == null)
-            //{
-            //    return NotFound();
-            //}
-            //  var city = await _context.Cities
-            //      .Include("CountryRef")
-            //      .SingleOrDefaultAsync(x => x.Id == id);
-
-            //  if (city == null)
-            //  {
-            //      return NotFound();
-            //  }
-
-            //  return city;
             if (id == null)
             {
                 return NotFound();
             }
-            var city = await _cityCrudService.GetByIdAsync((int)id);
-
+            var city = await _cityService.GetByIdAsync((int)id);
             if (city == null)
             {
+
                 return NotFound();
             }
 
-            return Ok(city);
+
+            return city;
+
+
+
         }
 
         // PUT: api/Cities/5
@@ -91,60 +71,29 @@ namespace SumeraTravelCorporation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCity(int id, CityDto city)
         {
-            //    if (id != city.Id)
-            //    {
-            //        return BadRequest();
-            //    }
-
-            //    _context.Entry(city).State = EntityState.Modified;
-
-            //    try
-            //    {
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!CityExists(id))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-
-            //    return NoContent();
-            if (id == null)
+            if (id != id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            //var city = await _cityCrudService.GetByIdAsync((int)id);
-            if(id == null)
+
+
+            try
             {
-                return NotFound();
+                await _cityService.UpdateAsync(city);
             }
-            if (ModelState.IsValid)
+            catch (DbUpdateConcurrencyException)
             {
-                try
+                if (!await _cityService.Exists(id))
                 {
-                    await _cityCrudService.UpdateAsync(city);
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!await _cityCrudService.ExistsAsync(city.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
-            return Ok(city);
 
-
+            return NoContent();
         }
 
         // POST: api/Cities
@@ -152,11 +101,14 @@ namespace SumeraTravelCorporation.Controllers
         [HttpPost]
         public async Task<ActionResult<City>> PostCity(CityDto city)
         {
-            if (ModelState.IsValid)
+            if (city == null)
             {
-                await _cityCrudService.CreateAsync(city);
+                return Problem("Entity set 'ApplicationDbContext.Citys'  is null.");
             }
-            return Ok(city);
+            await _cityService.CreateAsync(city);
+
+
+            return CreatedAtAction("GetCity", new { id = city.Id }, city);
         }
 
         // DELETE: api/Cities/5
@@ -167,19 +119,16 @@ namespace SumeraTravelCorporation.Controllers
             {
                 return NotFound();
             }
-            var city = await _cityCrudService.GetByIdAsync((int)id);
+            var city = await _cityService.GetByIdAsync((int)id);
             if (city == null)
             {
                 return NotFound();
             }
-            await _cityCrudService.DeleteAsync(id);
+
+            await _cityService.DeleteAsync((int)id);
+
 
             return NoContent();
         }
-
-        //private bool Exists(int id)
-        //{
-        //    //return (_context.Cities?.Any(e => e.Id == id)).GetValueOrDefault();
-        //}
     }
 }

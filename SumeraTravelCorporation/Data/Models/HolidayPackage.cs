@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SumeraTravelCorporation.RepositoryPattern.RepositoryBase;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SumeraTravelCorporation.Data.Models
 {
     [Table("HolidayPackage", Schema = "Master")]
-    public class HolidayPackage
+    public class HolidayPackage : DataModelBase
     {
         public int HolidayPackageId { get; set; }
         public int? FromLocationRefId { get; set; }

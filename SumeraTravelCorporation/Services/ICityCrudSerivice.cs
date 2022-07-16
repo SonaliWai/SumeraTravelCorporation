@@ -8,10 +8,9 @@ namespace SumeraTravelCorporation.Services
         public Task<List<CityDto>> GetAllAsync();
 
         public Task<CityDto?> GetByIdAsync(int id);
-        public Task CreateAsync(CityDto city);
-        public Task UpdateAsync(CityDto city);
+        public Task CreateAsync(CityDto cityDto);
+        public Task UpdateAsync(CityDto cityDto);
         public Task DeleteAsync(int id);
-        Task<bool> ExistsAsync(int id);
-        Task<IEnumerable> GetCountryListForDropDownAsync();
+        Task<bool> Exists(int id);
     }
 }
